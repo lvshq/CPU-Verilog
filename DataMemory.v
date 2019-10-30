@@ -1,23 +1,4 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    20:35:21 03/15/2016 
-// Design Name: 
-// Module Name:    DataMemory 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+
 module DataMemory(
 	input RW,
 	input [31:0] DAddr,
@@ -29,7 +10,7 @@ module DataMemory(
 	   输入：
 			DAddr：读取或者写入数据的地址
 			Datain：需要写入的数据
-			RW：能否写入数据
+			RW：存储器能否写入数据
 		输出：
 			DataOut：读取的数据
 	 */

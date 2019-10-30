@@ -1,26 +1,3 @@
-`timescale 1ns / 1ps
-
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   16:13:24 04/13/2016
-// Design Name:   CU
-// Module Name:   G:/myCPU/myCPU/controlUnit_tf.v
-// Project Name:  myCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: CU
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
 
 module controlUnit_tf;
 
@@ -32,8 +9,8 @@ module controlUnit_tf;
 	wire RegOut;
 	wire InsMenRW;
 	wire ExtSel;
-	wire DataMenRW;
-	wire ALUM2Reg;
+	wire DataMenRW; 
+	wire ALUM2Reg; 
 	wire ALUSrcB;
 	wire PCSrc;
 	wire RegWre;
@@ -61,29 +38,33 @@ module controlUnit_tf;
 		op = 0;
 		zero = 0;
 
-		// Wait 100 ns for global reset to finish
+		// Wait 100 ns for global reset to finish。？
 		#100;
-         op = 6'b000000;
+        	op = 6'b000000;//add
+        #100;
+			op = 6'b010001;//and
 		#100;
-			op = 6'b000001;
+			op = 6'b101010;//slt
 		#100;
-			op = 6'b010000;
+			op = 6'b001010;//slti
+
 		#100;
-			op = 6'b010001;
-		#100;
-			op = 6'b010010;
-		#100;
-			op = 6'b100000;
-		#100;
-			op = 6'b100110;
-		#100;
-			op = 6'b100111;
-		#100;
-			op = 6'b110000;
-		#100;
-			op = 6'b111111;
+			op = 6'b111111;//hali
         
 		// Add stimulus here
+
+		reg i_add;
+	reg i_sub;
+	reg i_ori;
+	reg i_and;
+	reg i_or;
+	reg i_move;
+	reg i_sw;
+	reg i_lw;
+	reg i_beq;
+	reg i_halt;
+	reg i_slt;
+	reg i_slti;
 
 	end
       

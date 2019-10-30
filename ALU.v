@@ -1,23 +1,4 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    16:24:08 11/13/2014 
-// Design Name: 
-// Module Name:    ALU 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+
 module ALU(
 	in1,
 	in2,
@@ -52,19 +33,21 @@ module ALU(
 				Out = in1 + in2;
 				//$display( "add" );
 			end
-			3'b001: begin
-				Out = in1 - in2;
-				//$display("sub");
+			
+			3'b010: begin
+				Out = (in1 < in2)? 1:0;
+				//$display("slt");
 			end
-			3'b011: begin
-				Out = in1 | in2;
-				//$display("or");
-			end
+			
 			3'b100: begin
 				Out = in1 & in2;
 				//$display("and");
 			end
-         /* 101,110,111*/
+			
+			3'b101: begin
+				Out =  (in1 < in2)? 1:0;
+				//$display("sltI");
+			end
 		endcase
 		
 		if( Out == 0 )
@@ -79,10 +62,6 @@ module ALU(
 		$display( "Zero %d", Zero );
 		*/
 		
-		if( Out == 0 )
-			Zero = 1;
-		else
-			Zero = 0;
 	end
 	
 	

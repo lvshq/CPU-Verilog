@@ -1,23 +1,4 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    18:08:11 11/13/2014 
-// Design Name: 
-// Module Name:    RegisterFile 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+
 module RegisterFile(
 	input clk,
 	input RegWrite,
@@ -60,7 +41,7 @@ module RegisterFile(
 		//寄存器写入操作
 		//当写入的目标寄存器不是寄存器0并且RegWrite=1（表示寄存器能够写入时）才有效
 		if ( ( write != 0 ) && ( RegWrite == 1 ) ) begin
-   		registers[write] = writeData;           // 写存储器
+   			registers[write] = writeData;           // 写存储器
 			$display("write %d", write);
 			$display("RegWrite %d", RegWrite);
 			$display("writeData %d", writeData);

@@ -1,29 +1,7 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    21:57:08 03/15/2016 
-// Design Name: 
-// Module Name:    PCCalculator 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
 
-/*
- 计算PC下一次的地址
-*/
+//计算PC下一次的地址
 module PCCalculator(
-	input PCSrc,
+	input PCSrc,//控制信号
 	input [31:0] prePC,
 	input [31:0] extendOut,
 	output wire [31:0] postPC

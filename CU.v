@@ -1,23 +1,4 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    17:38:46 03/15/2016 
-// Design Name: 
-// Module Name:    CU 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+
 module CU(
 	input [5:0]op, // 表示需要被解码的操作
 	input zero,
@@ -43,6 +24,8 @@ module CU(
 	reg [5:0] LW;
 	reg [5:0] BEQ;
 	reg [5:0] HALT;
+	reg [5:0] SLT;
+	reg [5:0] SLTI;
 	
 	reg i_add;
 	reg i_sub;
@@ -54,6 +37,8 @@ module CU(
 	reg i_lw;
 	reg i_beq;
 	reg i_halt;
+	reg i_slt;
+	reg i_slti;
 	
 	initial begin
 		i_add = 0;
@@ -66,35 +51,32 @@ module CU(
 		i_lw = 0;
 		i_beq = 0;
 		i_halt = 0;
+		i_slt =0;
+		i_slti =0;
 	end
 	
 	// 见“表1 控制信号的作用”，根据表中内容写出各信号逻辑表达式。用持续赋值语句（及时反映各信号的变化）为各wire赋值
-	assign ALUSrcB = i_ori || i_sw || i_lw;
+	assign ALUSrcB = i_ori || i_sw || i_lw || i_slti;
 	assign ALUM2Reg = i_lw;
-	assign RegWre = i_add || i_sub || i_ori || i_and || i_or || i_move || i_lw;
+	assign RegWre = i_add || i_sub || i_ori || i_and || i_or || i_move || i_lw || i_slt || i_slti;
 	assign DataMenRW = i_sw;
 	assign ExtSel = i_sw || i_lw || i_beq;
 	assign PCSrc = i_beq && zero;
-	assign RegOut = i_add || i_sub || i_and || i_or || i_move;
+	assign RegOut = i_add || i_sub || i_and || i_or || i_move ||i_slt;
 	assign PCWre = !i_halt;
-	assign ALUOp[2] = i_and;
-	assign ALUOp[1] = i_ori || i_or;
-	assign ALUOp[0] = i_sub || i_ori || i_or || i_beq;
+	assign ALUOp[2] = i_and || i_slti;
+	assign ALUOp[1] = i_ori || i_or || i_slt;
+	assign ALUOp[0] = i_sub || i_ori || i_or || i_beq || i_slti;
 	assign InsMenRW = 0;
 	
 	// 每当需要被解码的操作发送改变，或者zero信号为1时，判断并改变各变量的值
 	always@(op or zero) begin
-	   // 初始化各指令的操作码
+	   // 初始化各指令的操作码。
 		ADD = 6'b000000;
-		SUB = 6'b000001;
-		ORI = 6'b010000;
 		AND = 6'b010001;
-		OR = 6'b010010;
-		MOVE = 6'b100000;
-		SW = 6'b100110;
-		LW = 6'b100111;
-		BEQ = 6'b110000;
-		HALT = 6'b111111;
+		SLT = 6'b101010;
+		SLTI =6'b001010;
+		HALT =6'b111111;
 		
 		i_add = 0;
 		i_sub = 0;
@@ -106,35 +88,22 @@ module CU(
 		i_lw = 0;
 		i_beq = 0;
 		i_halt = 0;
+		i_slti =0;
+		i_slt =0;
 		
-		// 解码操作数
+		// 解码操作数 因为ADD已经被初始化
 		case (op)
 			ADD: begin
 				i_add = 1;
 			end
-			SUB: begin
-				i_sub = 1;
-			end
-			ORI: begin
-				i_ori = 1;
-			end
 			AND: begin
 				i_and = 1;
 			end
-			OR: begin
-				i_or = 1;
+			SLT: begin
+				i_slt = 1;
 			end
-			MOVE: begin
-				i_move = 1;
-			end
-			SW: begin
-				i_sw = 1;
-			end
-			LW: begin
-				i_lw = 1;
-			end
-			BEQ: begin
-				i_beq = 1;
+			SLTI: begin
+				i_slti = 1;
 			end
 			HALT: begin
 				i_halt = 1;

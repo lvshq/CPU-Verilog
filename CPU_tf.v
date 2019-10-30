@@ -1,29 +1,7 @@
-`timescale 1ns / 1ps
-
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:10:12 03/16/2016
-// Design Name:   CPU
-// Module Name:   C:/Users/huire/Desktop/work/CPU/CPU_tf.v
-// Project Name:  CPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: CPU
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
 
 module CPU_tf;
-
+	parameter tck = 10; ///< clock tick
+	
 	// Inputs
 	reg CLK;
 	reg Reset;
@@ -38,7 +16,7 @@ module CPU_tf;
 	wire ALUSrcB;
 	wire PCSrc;
 	wire RegWre;
-   wire PCWre;
+    wire PCWre;
 	wire [2:0] ALUOp;
 	wire [31:0] PCin;
 	wire [31:0] PCout;
@@ -93,20 +71,38 @@ module CPU_tf;
 		.PCValue(PCValue)
 	);
 
+	integer num_iter = 0 ;
+	always #(tck/2) CLK <= ~CLK; // clocking device
+
 	initial begin
 		Reset = 0;
-		CLK = 1;
-		
+		CLK = 0;
+		$dumpfile("cpu_ah.vcd");
+		$dumpvars(-1, uut);
+	
 		// Wait 50 ns for global reset to finish
 		// #10;
 		// Reset = 0;
 		
 		// Initialize Inputs
-		forever begin
-			#10;
-			CLK = !CLK;
-		end
-
+		// forever begin
+		// 	#10;
+		// 	CLK = !CLK;
+		// end
+	
+		// #(tck*2);
+		
+		// Reset = 1;
+		// #(tck*2);
+		
+		// Reset = 0;
+		// #(tck*2);
+	end
+	
+	always @(posedge CLK) begin
+		num_iter = num_iter + 1;
+		if (num_iter > 10)
+			$finish;
 	end
       
 endmodule

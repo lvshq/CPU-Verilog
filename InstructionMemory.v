@@ -1,64 +1,50 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    20:27:18 03/15/2016 
-// Design Name: 
-// Module Name:    InstructionMemory 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+
 module InstructionMemory(
 	input RW,
-	input [31:0] IAddr,
-	output [31:0] IDataOut
+	input [31:0] IAddr,//PC
+	output [31:0] IDataOut //è¾“å‡ºæŒ‡ä»¤
     );
-	 reg [7:0] InsMEM [127:0];
+	reg [7:0] InsMEM [127:0];
 	
 	/*
-	½«Ö¸Áî´úÂë³õÊ¼»¯µ½Ö¸Áî´æ´¢Æ÷ÖĞ£¬Ö±½ÓĞ´Èë¡£
-	½«ÏÂ·½12Ìõ×¢ÊÍÖĞµÄ¾ßÌåÖ¸Áî£¬°´ÕÕ¸÷Ö¸ÁîµÄ¸ñÊ½£¬·­Òë³É¶ÔÓ¦¶ş½øÖÆ
+	å°†æŒ‡ä»¤ä»£ç åˆå§‹åŒ–åˆ°æŒ‡ä»¤å­˜å‚¨å™¨ä¸­ï¼Œç›´æ¥å†™å…¥ã€‚
+	å°†ä¸‹æ–¹æ³¨é‡Šä¸­çš„å…·ä½“æŒ‡ä»¤ï¼ŒæŒ‰ç…§å„æŒ‡ä»¤çš„æ ¼å¼ï¼Œç¿»è¯‘æˆå¯¹åº”äºŒè¿›åˆ¶
 	*/
 	
 	initial begin
-		//ORI $1 $0 10
-		InsMEM[0] = 8'b01000000;
-		InsMEM[1] = 8'b00000001;
-		InsMEM[2] = 8'b00000000;
-		InsMEM[3] = 8'b00001010;
-		
-		//ORI $2 $0 12
-		InsMEM[4] = 8'b01000000;
-		InsMEM[5] = 8'b00000010;
-		InsMEM[6] = 8'b00000000;
-		InsMEM[7] = 8'b00001100;
-		
-		//ADD $3 $1 $2
-		InsMEM[8]  = 8'b00000000;
-		InsMEM[9]  = 8'b00100010;
-		InsMEM[10] = 8'b00011000;
+		//ADD $3 $1 $2 
+		//00000000 00100010 00011000 00000000
+		//op=000000 rs=00001 rt=00010 rd=00000
+		InsMEM[0] = 8'b00000000; //op
+		InsMEM[1] = 8'b00100010; 
+		InsMEM[2] = 8'b00011000;
+		InsMEM[3] = 8'b00000000;
+
+		//AND $4 $1 $2 
+		//01000100 00100010 00100000 00000000
+		//op=010001 rs=00001 rt=000010 rd=00100
+
+		InsMEM[4] = 8'b01000100;
+		InsMEM[5] = 8'b00100010;
+		InsMEM[6] = 8'b00100000;
+		InsMEM[7] = 8'b00000000;
+
+		//SLT $4 $2 $3
+		InsMEM[8]  = 8'b10101000;
+		InsMEM[9]  = 8'b01000011;
+		InsMEM[10] = 8'b00100000;
 		InsMEM[11] = 8'b00000000;
 		
-		//SUB $5 $2 $1
-		InsMEM[12] = 8'b00000100;
-		InsMEM[13] = 8'b01000001;
-		InsMEM[14] = 8'b00101000;
+		//SLTI $4 $5 #0
+		InsMEM[12] = 8'b00101000;
+		InsMEM[13] = 8'b10100100;
+		InsMEM[14] = 8'b00000000;
 		InsMEM[15] = 8'b00000000;
-		
-		//AND $4 $1 $2
-		InsMEM[16] = 8'b01000100;
+
+		//OR $8 $1 $2
+		InsMEM[16] = 8'b01001000;
 		InsMEM[17] = 8'b00100010;
-		InsMEM[18] = 8'b00100000;
+		InsMEM[18] = 8'b01000000;
 		InsMEM[19] = 8'b00000000;
 		
 		//OR $8 $1 $2
@@ -78,7 +64,7 @@ module InstructionMemory(
 		InsMEM[29] = 8'b00000000;
 		InsMEM[30] = 8'b01011000;
 		InsMEM[31] = 8'b00000000;
-		
+
 		//SW $2 300($1)
 		InsMEM[32] = 8'b10011000;
 		InsMEM[33] = 8'b00100010;

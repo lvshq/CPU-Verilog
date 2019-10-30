@@ -12,25 +12,6 @@
 `include "DataMemory.v"
 `include "WDSelector.v"
 
-//////////////////////////////////////////////////////////////////////////////////
-// Company: SYSU
-// Engineer: Shuangquan Lyu
-// 
-// Create Date:    15:52:11 03/15/2016 
-// Design Name: 
-// Module Name:    CPU 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
 module CPU(
 	 input CLK,
 	 input Reset,
